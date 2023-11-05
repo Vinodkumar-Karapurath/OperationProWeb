@@ -1,0 +1,200 @@
+﻿@page
+@model AdminWebCore.Pages.StaffAddModel
+@{
+}
+
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Staff</strong>
+                            <small> Add</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input class="form-control" id="name" name="EmpName" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="formFileSm" class="form-label">Staff Photo</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="StaffPhotofile">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Empid">EmpID</label>
+                                        <input class="form-control" id="Empid" name="EMPID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="TGID">TGID</label>
+                                        <input class="form-control" id="TGID" name="TGID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                                @* company list*@
+                                 <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="company">Company</label>
+                                            <div class="input-group-prepend">
+                                            <select id="company" class="form-select" name="company" aria-label="Default Comapny">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.company)
+                                                   {
+                                                    <option value="@wm.id">@wm.MasterName</option>                                                   
+                                                   }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Job">Job</label>
+                                        <div class="">
+                                            <select class="form-select form-select-sm" name="JobTitle" aria-label=".form-select-sm example">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.job)
+                                                {
+                                                    <option value="@wm.id">@wm.MasterName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                @* Department list*@
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Department">Department</label>
+                                        <div class="input-group-prepend">
+                                            <select id="Department" class="form-select" name="Department" aria-label="Default Comapny">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.department)
+                                                {
+                                                    <option value="@wm.id">@wm.MasterName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Location">Location</label>
+                                        <div class="">
+                                            <select id="Location" name="Location" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.location)
+                                                {
+                                                    <option value="@wm.id">@wm.MasterName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                           
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="Mobile">Mobile</label>
+                                        <input class="form-control" id="Mobile" name="Mobile" type="text" placeholder="Enter Details">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="Email">Email</label>
+                                        <input class="form-control" id="Email" name="Email" type="text" placeholder="Enter Details">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="Iqama">Iqama</label>
+                                        <input class="form-control" id="Iqama" name="IqamaID" type="text" placeholder="Enter Details">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                
+                                <label class="col-form-label" for="date-input">Iqama ExpDate</label>
+
+                                    <input class="form-control" id="date-input" type="date" name="IqamaExpDate" placeholder="date">
+                                                      
+                             </div>
+
+                            <div class="col-sm-4">
+                                <label for="formFileSm" class="form-label">Iqama File</label>
+                                    <input class="form-control form-control-sm" name="Iqamafile" id="formFileSm" type="file" asp-for="Iqamafile">
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="SARID">SAR ID</label>
+                                        <input class="form-control" id="SARID" name="SARID" type="text" placeholder="Enter Details">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                                <label class="col-form-label" for="date-input">SARID ExpDate</label>
+
+                                    <input class="form-control" id="date-input" type="date" name="SARExpDate" placeholder="date">
+
+                            </div>
+                                <div class="col-sm-4">
+                                    <label for="formFileSm" class="form-label">SAR File</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="SARfile">
+                                </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="Passport">Passport</label>
+                                        <input class="form-control" id="Passport" name="Passport" type="text" placeholder="Enter Details">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                                <label class="col-form-label" for="date-input">Passport ExpDate</label>
+
+                                    <input class="form-control" id="date-input" type="date" name="PassportExpDate" placeholder="date">
+
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="formFileSm" class="form-label">Passport File</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="Passportfile">
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit" asp-page-handler="Submit">
+                                <i class="fa fa-dot-circle-o"></i> Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

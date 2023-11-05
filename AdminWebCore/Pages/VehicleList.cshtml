@@ -1,0 +1,76 @@
+﻿@page
+@model AdminWebCore.Pages.VehicleListModel
+@{
+}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <form class="form-horizontal" action="" method="post">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <select class="form-select" aria-label="Default select Search">
+                                                <option selected>All </option>
+                                                <option value="1">plateNo</option>
+                                                <option value="2">EmpName</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <input class="form-control" id="input1-group3" type="text" name="input1-group3" placeholder="Search">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="container-fluid">
+                            <div class="animated fadeIn">
+                                <div class="row">
+
+                                    @foreach (var wm in Model.vehicleModel)
+                                    {
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="card">
+                                                <div class="card-header">ID:@wm.ID</div>
+                                                <div class="card-body">
+                                                    <div>Vehicle: @wm.Vehicle</div>
+                                                    <div class="small text-muted">
+                                                        Plate: <span>@wm.plateNo</span>                                                 
+                                                        
+                                                    </div>
+                                                     <div class="small text-muted">
+                                                        Model: <span>@wm.Model</span> Type: <span>@wm.Type</span>
+                                                    </div>
+                                                    <div class="small text-muted">
+                                                        InsuranceExp: <span>@wm.InsuranceExpDate</span> RegistartionExp<span> @wm.VehicleExpDate</span>
+                                                    </div>
+
+                                                    <div>EMPID: @wm.EMPID</div>                                                    
+                                                    <div>EmpName:@wm.EmpName</div>
+                                                    <div class="small text-muted">
+                                                        <span>Authorize:  @wm.AuthorizationExpDate</span>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

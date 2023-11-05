@@ -1,0 +1,108 @@
+﻿@page
+@model AdminWebCore.Pages.VehicleAddModel
+@{
+}
+
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Vehicle</strong>
+                            <small> Add</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Vehicle">Vehicle</label>
+                                        <input class="form-control" id="Vehicle" name="Vehicle" type="text" placeholder="Enter Vehicle Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="col-form-label" for="date-input">Vehicle ExpDate</label>
+                                    <input class="form-control" id="date-input" type="date" name="VehicleExpDate" placeholder="date">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="PalteNo">PalteNo</label>
+                                        <input class="form-control" id="PalteNo" name="plateNo" type="text" placeholder="Enter plateNo Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="col-form-label" for="date-input">Insurance ExpDate</label>
+                                    <input class="form-control" id="date-input" type="date" name="InsuranceExpDate" placeholder="date">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Model">Model</label>
+                                        <input class="form-control" id="Model" name="Model" type="text" placeholder="Enter Model Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Type">Type</label>
+                                        <div class="input-group-prepend">
+                                            <select id="Type" class="form-select" name="Type" aria-label="Default Type">
+                                                <option value="">None</option> 
+                                                @foreach (var wm in Model.Type)
+                                                {
+                                                    <option value="@wm.id">@wm.MasterName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="AuthorizationID">Authorization</label>
+                                        <div class="input-group-prepend">
+                                            <select id="AuthorizationID" class="form-select" name="EMPID" aria-label="Default Type">
+                                                <option value="">None</option>
+                                                @foreach (var wm in Model.EMPID)
+                                                {
+                                                    <option value="@wm.id">@wm.MasterName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="col-form-label" for="date-input">Authorization ExpDate</label>
+                                    <input class="form-control" id="date-input" type="date" name="AuthorizationExpDate" placeholder="date">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="formFileSm" class="form-label">Attachment File</label>
+                                    <input class="form-control form-control-sm" name="PDFFile" id="formFileSm" type="file" asp-for="PDFFile">
+                                </div>                     
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit" asp-page-handler="Submit">
+                                <i class="fa fa-dot-circle-o"></i> Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

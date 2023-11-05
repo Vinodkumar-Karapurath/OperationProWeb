@@ -1,0 +1,48 @@
+﻿@page
+@model AdminWebCore.Pages.MasterEditModel
+@{
+}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>@Model.Type.Type</strong>
+                            <small> Add</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    
+                                        
+                                    <div class="form-group">
+                                        <label for="ID"> ID</label>
+                                        <input class="form-control" id="ID" name="ID" value="@Model.Type.IDS" type="text" disabled="disabled">
+                                        <input class="form-control" id="IDS" name="IDS" value="@Model.Type.IDS" type="text" hidden="hidden">
+                                        <label for="name">@Model.Type.Type Name</label>
+                                        <input id="type" name="Type" value="@Model.Type.Type" type="text" hidden="hidden">
+                                        <input class="form-control" id="name" name="MasterName" value="@Model.Type.MasterName"  type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit" asp-page-handler="Submit">
+                                <i class="fa fa-dot-circle-o"></i> Update
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

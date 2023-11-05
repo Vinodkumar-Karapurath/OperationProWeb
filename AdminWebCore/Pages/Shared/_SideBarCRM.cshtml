@@ -1,0 +1,68 @@
+﻿<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href=@Url.Content("~/index")>
+                    <i class="nav-icon icon-speedometer"></i> Dashboard
+                    <span class="badge badge-primary">NEW</span>
+                </a>
+            </li>
+            <li class="nav-title">Masters</li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/Masters") asp-route-Types="company">
+                    <i class="nav-icon icon-organization"></i> Company
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/Masters") asp-route-Types="department">
+                    <i class="nav-icon icon-drawer"></i> Department
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/Masters") asp-route-Types="job">
+                    <i class="nav-icon icon-people"></i> Job
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/Masters") asp-route-Types="location">
+                    <i class="nav-icon icon-location-pin"></i> Location
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/Masters") asp-route-Types="vehicle">
+                    <i class="nav-icon icon-rocket"></i> Vehicle
+                </a>
+            </li>
+
+            <li class="nav-title">Operations</li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/VehicleAdd")>
+                    <i class="nav-icon icon-direction"></i> Vehicle  Master
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/StaffList")>
+                    <i class="nav-icon icon-user-follow"></i> Staff
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/StaffAdd") >
+                    <i class="nav-icon icon-user-following"></i> New Staff
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-page=@Url.Content("/VehicleList")>
+                    <i class="nav-icon icon-directions"></i> Vehicle List
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/charts">
+                    <i class="nav-icon icon-pie-chart"></i> Settings
+                </a>
+            </li>
+           
+        </ul>
+    </nav>
+    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>

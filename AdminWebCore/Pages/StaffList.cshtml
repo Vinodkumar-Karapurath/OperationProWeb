@@ -1,0 +1,77 @@
+﻿@page
+@model AdminWebCore.Pages.StaffListModel
+@{
+}
+
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <form class="form-horizontal" action="" method="post">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <select class="form-select" aria-label="Default select Search">
+                                                <option selected>All </option>
+                                                <option value="1">Emp ID</option>
+                                                <option value="2">Empname</option>
+                                                <option value="3">Iqama</option>
+                                            </select>
+                                        </div>
+                                        <input class="form-control" id="input1-group3" type="text" name="input1-group3" placeholder="Search">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        
+                        </div>
+                    <div class="card-body">
+                       
+                        <div class="container-fluid">
+                        <div class="animated fadeIn">
+                            <div class="row">
+
+                            @foreach (var wm in Model.staffModel)
+                        {
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="card">
+                                        <div class="card-header">ID:@wm.ID</div>
+                                        <div class="card-body">
+                                                    <div>EMPID: @wm.EMPID</div>
+                                                    <div>TGID: @wm.TGID</div>
+                                                    <div>EmpName:@wm.EmpName</div>
+                                                    <div class="small text-muted">
+                                                        Mobile: <span>@wm.Mobile</span> @wm.Email
+                                                        <span>Location:  @wm.Location</span>
+                                                    </div>
+                                                    <div class="small text-muted">
+                                                        IqamaID: <span>@wm.IqamaID</span> @wm.IqamaExpDate
+                                                        <span>Company: @wm.Company</span> @wm.Department
+                                                        <span>Job:@wm.JobTitle</span>
+                                                    </div>
+                                                    <div class="small text-muted">
+                                                       SARID: <span>@wm.SARID</span> @wm.SARExpDate
+                                                    </div>
+                                                    <div class="small text-muted">
+                                                        Passport: <span>@wm.Passport</span> @wm.PassportExpDate
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        }
+
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

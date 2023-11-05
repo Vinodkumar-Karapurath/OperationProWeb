@@ -1,0 +1,59 @@
+﻿@page
+@model AdminWebCore.Pages.MastersModel
+@{
+}
+
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+
+            <div class="col-md-12">
+
+                <table class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="text-center">                                
+                                <a  asp-page=@Url.Content("/MasterAdd") asp-route-Types=@Model.Type>
+                                    <i class="icon-plus"></i> Add
+                                </a>
+                            </th>
+                            <th class="text-center">
+                                <i class="icon-people"></i>
+                            </th>                            
+                            <th>@Model.Type</th>                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var wm in Model.masterModel)
+                        {
+                            <tr>
+                                <td/>
+                                <td class="text-center">
+                                    <div class="avatar">
+                                        @*  <img class="img-avatar" src="~/lib/coreui/img/avatars/1.jpg" alt="admin@bootstrapmaster.com"> *@
+
+                                        <span>@wm.id</span>
+                                        <span class="avatar-status badge-primary"></span>
+                                    </div>
+                                </td>
+                                <td>
+                                   @*  <div>@wm.MasterName</div> *@
+                                    <a asp-page=@Url.Content("/MasterEdit") asp-route-IDS=@wm.id asp-route-MasterName=@wm.MasterName asp-route-type=@Model.Type>
+                                        <i class="icon-credit-card"></i> @wm.MasterName
+                                    </a>
+                                </td>
+                                
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
