@@ -39,7 +39,10 @@
                         {
                                 <div class="col-sm-6 col-md-4">
                                     <div class="card">
-                                        <div class="card-header">ID:@wm.ID</div>
+                                        <a asp-page=@Url.Content("/StaffEdit") asp-route-IDS=@wm.ID>
+                                            <div class="card-header">ID:@wm.ID</div>
+                                        </a>
+                                       
                                         <div class="card-body">
                                                     <div>EMPID: @wm.EMPID</div>
                                                     <div>TGID: @wm.TGID</div>
