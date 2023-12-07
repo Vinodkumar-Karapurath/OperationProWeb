@@ -2,3 +2,361 @@
 @model AdminWebCore.Pages.StaffEditModel
 @{
 }
+
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-sm-12">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Staff</strong>
+                            <small> Edit</small>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input class="form-control" id="name" name="EmpName" value="@Model.staffModel.EmpName" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="formFileSm" class="form-label">Staff Photo</label>
+                                    <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="StaffPhotofile">
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Empid">EmpID</label>
+                                        <input class="form-control" id="Empid" name="EMPID" value="@Model.staffModel.EMPID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="TGID">TGID</label>
+                                        <input class="form-control" id="TGID" name="TGID" value="@Model.staffModel.TGID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                                @* company list*@
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="company">Company</label>
+                                        <div class="input-group-prepend">
+                                            <select id="company" class="form-select" name="company" aria-label="Default Comapny">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.company)
+                                                {
+                                                    if (wm.id == int.Parse(@Model.staffModel.Company))
+                                                    {
+                                                        <option selected value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Job">Job</label>
+                                        <div class="">
+                                            <select class="form-select form-select-sm" name="JobTitle" aria-label=".form-select-sm example">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.job)
+                                                {
+                                                    if (wm.id == int.Parse(@Model.staffModel.JobTitle))
+                                                    {
+                                                        <option selected value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                @* Department list*@
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Department">Department</label>
+                                        <div class="input-group-prepend">
+                                            <select id="Department" class="form-select" name="Department" aria-label="Default Comapny">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.department)
+                                                {
+                                                    if (wm.id == int.Parse(@Model.staffModel.Department))
+                                                    {
+                                                        <option selected value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Location">Location</label>
+                                        <div class="">
+                                            <select id="Location" name="Location" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                @* <option value="0">None</option> *@
+                                                @foreach (var wm in Model.location)
+                                                {
+                                                    if (wm.id == int.Parse(@Model.staffModel.Location))
+                                                    {
+                                                        <option selected value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@wm.id">@wm.MasterName</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Mobile">Mobile</label>
+                                        <input class="form-control" id="Mobile" name="Mobile" value="@Model.staffModel.Mobile" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Email">Email</label>
+                                        <input class="form-control" id="Email" name="Email" value="@Model.staffModel.Email" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="Iqama">Iqama</label>
+                                        <input class="form-control" id="Iqama" name="IqamaID" value="@Model.staffModel.IqamaID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                    <label class="col-form-label" for="date-input">Iqama ExpDate</label>
+                                    
+                                    <input class="form-control" id="date-inputiq" type="date" asp-for='@Model.staffModel.IqamaExpDate' name="IqamaExpDate">
+
+                                </div>
+
+                                <div id="tblFiles" class="col-sm-4">
+                                    @Html.AntiForgeryToken()
+                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFileIqSm').disabled =this.checked;" />
+                                    <label for="formFileIqSm" class="form-label">Iqama File</label>
+                                    <input class="form-control form-control-sm" name="Iqamafile" id="formFileIqSm" type="file" asp-for="Iqamafile" disabled>
+                                    <a  class="view" href="javascript:;" rel='@Model.staffModel.ID' doc ="1">View PDF</a>
+                                </div>
+
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="SARID">SAR ID</label>
+                                        <input class="form-control" id="SARID" name="SARID" value="@Model.staffModel.SARID" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                    <label class="col-form-label" for="date-input">SARID ExpDate</label>
+
+                                    <input class="form-control" id="date-input" type="date" asp-for="@Model.staffModel.SARExpDate" name="SARExpDate" placeholder="date">
+
+                                </div>
+                                <div id="tblFiles" class="col-sm-4">
+                                
+                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFileSARSm').disabled =this.checked;" />
+                                    <label for="formFileSARSm" class="form-label">SAR File</label>
+                                    <input class="form-control form-control-sm" id="formFileSARSm" type="file" asp-for="SARfile" disabled>
+                                    <a class="view" href="javascript:;" rel='@Model.staffModel.ID' doc="2">View PDF</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        
+                                        <label for="Passport">Passport</label>
+                                        <input class="form-control" id="Passport" name="Passport" value="@Model.staffModel.Passport" type="text" placeholder="Enter Details">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+
+                                    <label class="col-form-label" for="date-input">Passport ExpDate</label>
+
+                                    <input class="form-control" id="date-input" type="date" asp-for="@Model.staffModel.PassportExpDate" name="PassportExpDate" placeholder="date">
+
+                                </div>
+                                <div id="tblFiles"  class="col-sm-4">
+                                
+                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFilepassSm').disabled =this.checked;" />
+                                    <label for="formFilepassSm" class="form-label">Passport File</label>
+                                    <input class="form-control form-control-sm" id="formFilepassSm" type="file" asp-for="Passportfile" disabled>
+                                    <a class="view" href="javascript:;" rel='@Model.staffModel.ID' doc="3">View PDF</a>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <embed width="100%" height="100%" src="@Model.staffModel.SARData" />
+                            </div>
+
+                            <div class="col-sm-12"  id="pdf_container"> </div>
+
+
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-primary" type="submit" asp-page-handler="Submit">
+                                <i class="fa fa-dot-circle-o"></i> Submit
+                            </button>
+                            <button class="btn btn-sm btn-danger" type="reset">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+
+                    
+                </form>
+
+               
+            </div>
+
+            
+        </div>
+
+    </div>
+
+     
+
+</div>
+
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf_viewer.min.css" rel ="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+    $(function () {
+        $("[id*=tblFiles] .view").click(function () {
+            
+            let linkposturl = '';
+            var RootUrl = '@Url.Content("~/")';
+
+        //     if (@Request.IsHttps == 'True')   
+        // { 
+        //     linkposturl = 'https://' + '@Request.Host' + '@Request.Path' + '?Handler=GetPDF';
+        // }
+        //     else
+        // { 
+        //     linkposturl = 'http://' + '@Request.Host' + '@Request.Path' + '?Handler=GetPDF';
+        // }
+        linkposturl = RootUrl + 'StaffEdit?Handler=GetPDF';
+
+            var data = {};
+            data.fileId = 2;
+            var fileId = $(this).attr("rel");
+            var doc = $(this).attr("doc");
+            $.ajax({
+                type: "POST",
+                url:  linkposturl ,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "fileId": fileId, "DOCID" : doc },
+                success: function (r) {
+                    //Convert Base64 string to Byte Array.
+                   
+                    var bytes = Base64ToBytes(r.data);
+                   
+
+                    LoadPdfFromBlob(bytes);
+                }
+            });
+        });
+    });
+
+    var pdfjsLib = window['pdfjs-dist/build/pdf'];
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
+    var pdfDoc = null;
+    var scale = 1; //Set Scale for zooming PDF.
+    var resolution = 1; //Set Resolution to Adjust PDF clarity.
+
+    function LoadPdfFromBlob(blob) {
+        //Read PDF from BLOB.
+        pdfjsLib.getDocument({ data: blob }).promise.then(function (pdfDoc_) {
+            pdfDoc = pdfDoc_;
+
+            //Reference the Container DIV.
+            var pdf_container = document.getElementById("pdf_container");
+            pdf_container.innerHTML = "";
+            pdf_container.style.display = "block";
+            
+            //Loop and render all pages.
+            for (var i = 1; i <= pdfDoc.numPages; i++) {
+                RenderPage(pdf_container, i);
+            }
+        });
+    };
+    function RenderPage(pdf_container, num) {
+        pdfDoc.getPage(num).then(function (page) {
+            //Create Canvas element and append to the Container DIV.
+            var canvas = document.createElement('canvas');
+            canvas.id = 'pdf-' + num;
+            ctx = canvas.getContext('2d');
+            pdf_container.appendChild(canvas);
+
+            //Create and add empty DIV to add SPACE between pages.
+            var spacer = document.createElement("div");
+            spacer.style.height = "20px";
+            pdf_container.appendChild(spacer);
+
+            //Set the Canvas dimensions using ViewPort and Scale.
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = resolution * viewport.height;
+            canvas.width = resolution * viewport.width;
+
+            //Render the PDF page.
+            var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport,
+                transform: [resolution, 0, 0, resolution, 0, 0]
+            };
+
+            page.render(renderContext);
+        });
+    };
+
+    function Base64ToBytes(base64) {
+ 
+        var s = window.atob(base64);
+  
+        var bytes = new Uint8Array(s.length);
+    
+        for (var i = 0; i < s.length; i++) {
+            bytes[i] = s.charCodeAt(i);
+        }
+        
+        return bytes;
+    };
+</script>

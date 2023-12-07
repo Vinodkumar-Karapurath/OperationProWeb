@@ -10,6 +10,7 @@ using System.Text;
 using System.IO;
 using AdminWebCore.Models;
 using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdminWebCore.Class
 {
@@ -63,7 +64,7 @@ namespace AdminWebCore.Class
                             EmpName = row.Field<string>("EmpName"),
                             Mobile = row.Field<string>("Mobile"),
                             TypeId = row.Field<string>("TypeId"),
-                            ExpDate = row.Field<DateTime>("ExpDate"),
+                            ExpDate = row.Field<DateTime?>("ExpDate"),
                             trantypes = row.Field<string>("trantypes"),
                             VehicleID = row.Field<Int32>("VehicleID"),
                            
@@ -343,6 +344,120 @@ namespace AdminWebCore.Class
 
             return result;
 
+        }
+
+        public StaffEditModels GetStaffEdit(int Id = 0)
+        {
+            StaffEditModels staffModel = new StaffEditModels();
+
+            try
+            {
+
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", Id);
+                cmd.CommandText = "SP_GETStaff";
+                reader = cmd.ExecuteReader();
+
+
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                reader.Close();
+
+
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    staffModel = dt.AsEnumerable()
+                        .Select(row => new StaffEditModels
+
+                        {
+                            ID = row.Field<Int32>("id"),
+                            EmpName = row.Field<string>("EmpName"),
+                            EMPID = row.Field<string>("EMPID"),
+                            SARID = row.Field<string>("SARID"),
+                            SARExpDate = row.Field<DateTime?>("SARExpDate"),
+                            TGID = row.Field<string>("TGID"),
+                            Company = row.Field<int>("CompanyID").ToString(),
+                            Department = row.Field<int>("Depart").ToString(),
+                            Email = row.Field<string>("Email"),
+                            IqamaExpDate = row.Field<DateTime?>("IqamaExpDate"),
+                            IqamaID = row.Field<string>("IqamaID"),
+                            JobTitle = row.Field<int>("JobTitle").ToString(),
+                            Mobile = row.Field<string>("Mobile"),
+                            Location = row.Field<int>("Location").ToString(),
+                            Passport = row.Field<string>("Passport"),
+                            PassportExpDate = row.Field<DateTime?>("PassportExpDate"),
+                            IqamacontentType =  row.Field<string>("IqamacontentType"),
+                            iqamaData = row.Field<byte[]>("iqamaData"),
+                            SARcontentType = row.Field<string>("SARcontentType"),
+                            SARData = row.Field<byte[]>("SARData"),
+                            PassportcontentType = row.Field<string>("PassportcontentType"),
+                            PassportData = row.Field<byte[]>("PassportData"),
+                            PhotoData = row.Field<byte[]>("PhotoData"),
+
+                        }).FirstOrDefault();
+
+                }
+
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return staffModel;
+            }
+            finally { Connection.Close(); }
+
+            return staffModel;
+
+        }
+
+        public JsonResult GetPDF(int DOCID = 0,int  MasterID =0 )
+        {
+            byte[] bytes;
+            string fileName, contentType;
+
+            try
+            {
+
+
+                Connection.Open();
+
+              
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DOCID", DOCID);
+                cmd.Parameters.AddWithValue("@MasterID", MasterID);
+
+                cmd.CommandText = "SP_GetPdf";
+
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    sdr.Read();
+                    bytes = (byte[])sdr["Data"];
+                    contentType = sdr["ContentType"].ToString();
+                    fileName = sdr["Name"].ToString();
+                }
+
+
+               
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return null;
+            }
+            finally { Connection.Close(); }
+
+            return new JsonResult(new { FileName = fileName, ContentType = contentType, Data = bytes });
         }
 
         public List<VehicleModel> VehicleList(int Type = 0, string condtion = "")

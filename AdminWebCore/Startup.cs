@@ -48,6 +48,8 @@ namespace AdminWebCore
 
             services.AddTransient<DatabaseMiddleware>(_ => new DatabaseMiddleware(Configuration["ConnectionStrings:DefaultConnection"]));
 
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
             //services.AddAuthentication("Bearer")
             //        .AddJwtBearer("Bearer", options => {
             //            options.Authority = "http://localhost/CrmDemo";
@@ -60,7 +62,7 @@ namespace AdminWebCore
             //        .AddTestUsers(InMemoryConfig.GetUsers())
             //        .AddInMemoryClients(InMemoryConfig.GetClients());
 
-          
+
 
             //services.AddSwaggerDocument(config => {
             //    config.DocumentProcessors.Add(new SecurityDefinitionAppender("JWT Token",

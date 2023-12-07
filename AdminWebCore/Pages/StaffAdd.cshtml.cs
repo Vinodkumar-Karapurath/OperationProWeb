@@ -98,6 +98,8 @@ namespace AdminWebCore.Pages
             passms.Dispose();
             photoms.Dispose();
 
+            
+
             company = db.MasterList("company");
             department = db.MasterList("department");
             job = db.MasterList("job");
