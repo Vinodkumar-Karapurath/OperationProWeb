@@ -16,7 +16,15 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="ID">ID</label>
+                                        <input class="form-control" value="@Model.staffModel.ID" type="text" placeholder="Enter Details" disabled>
+                                        <input class="form-control" id="ID" name="ID" value="@Model.staffModel.ID" type="text" placeholder="Enter Details" hidden>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="name">Name</label>
                                         <input class="form-control" id="name" name="EmpName" value="@Model.staffModel.EmpName" type="text" placeholder="Enter Details">
@@ -166,7 +174,7 @@
 
                                 <div id="tblFiles" class="col-sm-4">
                                     @Html.AntiForgeryToken()
-                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFileIqSm').disabled =this.checked;" />
+                                    <input type="checkbox" id="checkBox" value="@Model.staffModel.isIqamaUpdate" asp-for=@Model.staffModel.isIqamaUpdate onclick="document.getElementById('formFileIqSm').disabled =!this.checked;" />
                                     <label for="formFileIqSm" class="form-label">Iqama File</label>
                                     <input class="form-control form-control-sm" name="Iqamafile" id="formFileIqSm" type="file" asp-for="Iqamafile" disabled>
                                     <a  class="view" href="javascript:;" rel='@Model.staffModel.ID' doc ="1">View PDF</a>
@@ -189,7 +197,7 @@
                                 </div>
                                 <div id="tblFiles" class="col-sm-4">
                                 
-                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFileSARSm').disabled =this.checked;" />
+                                    <input type="checkbox" id="checkBox1" value="@Model.staffModel.isSarUpdate" asp-for=@Model.staffModel.isSarUpdate onclick="document.getElementById('formFileSARSm').disabled =!this.checked;" />
                                     <label for="formFileSARSm" class="form-label">SAR File</label>
                                     <input class="form-control form-control-sm" id="formFileSARSm" type="file" asp-for="SARfile" disabled>
                                     <a class="view" href="javascript:;" rel='@Model.staffModel.ID' doc="2">View PDF</a>
@@ -211,7 +219,7 @@
                                 </div>
                                 <div id="tblFiles"  class="col-sm-4">
                                 
-                                    <input type="checkbox" id="checkBox" checked onclick="document.getElementById('formFilepassSm').disabled =this.checked;" />
+                                    <input type="checkbox" id="checkBox2" value="@Model.staffModel.isPassUpdate" asp-for=@Model.staffModel.isPassUpdate onclick="document.getElementById('formFilepassSm').disabled =!this.checked;" />
                                     <label for="formFilepassSm" class="form-label">Passport File</label>
                                     <input class="form-control form-control-sm" id="formFilepassSm" type="file" asp-for="Passportfile" disabled>
                                     <a class="view" href="javascript:;" rel='@Model.staffModel.ID' doc="3">View PDF</a>

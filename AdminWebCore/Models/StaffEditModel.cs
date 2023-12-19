@@ -32,5 +32,11 @@ namespace AdminWebCore.Models
         public byte[] PassportData { get; set; }
 
         public byte[] PhotoData { get; set; }
+
+        public bool isIqamaUpdate { get; set; }
+        public bool isSarUpdate { get; set; }
+        public bool isPassUpdate { get; set; }
+        public bool isPhotoUpdate { get; set; }
+
     }
 }

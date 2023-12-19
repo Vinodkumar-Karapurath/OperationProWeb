@@ -460,6 +460,70 @@ namespace AdminWebCore.Class
             return new JsonResult(new { FileName = fileName, ContentType = contentType, Data = bytes });
         }
 
+        public string StaffUpdate(StaffEditModels staff)
+        {
+
+            string result = string.Empty;
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "SP_UpdateStaff";
+                cmd.Parameters.AddWithValue("@ID", staff.ID);
+                cmd.Parameters.AddWithValue("@EmpName", staff.EmpName);
+                cmd.Parameters.AddWithValue("@EMPID", staff.EMPID);
+                cmd.Parameters.AddWithValue("@TGID", staff.TGID);
+                cmd.Parameters.AddWithValue("@Email", staff.Email);
+                cmd.Parameters.AddWithValue("@Mobile", staff.Mobile);
+                cmd.Parameters.AddWithValue("@IqamaID", staff.IqamaID);
+                cmd.Parameters.AddWithValue("@IqamaExpDate", staff.IqamaExpDate);
+                cmd.Parameters.AddWithValue("@SARID", staff.SARID);
+                cmd.Parameters.AddWithValue("@SARExpDate", staff.SARExpDate);
+                cmd.Parameters.AddWithValue("@Passport", staff.Passport);
+                cmd.Parameters.AddWithValue("@PassportExpDate", staff.PassportExpDate);
+                cmd.Parameters.AddWithValue("@Company", staff.Company);
+                cmd.Parameters.AddWithValue("@Department", staff.Department);
+                cmd.Parameters.AddWithValue("@JobTitle", staff.JobTitle);
+                cmd.Parameters.AddWithValue("@Location", staff.Location);
+                cmd.Parameters.AddWithValue("@IqamacontentType", staff.IqamacontentType);
+                cmd.Parameters.AddWithValue("@iqamaData", staff.iqamaData);
+                cmd.Parameters.AddWithValue("@SARcontentType", staff.SARcontentType);
+                cmd.Parameters.AddWithValue("@SARData", staff.SARData);
+                cmd.Parameters.AddWithValue("@PassportcontentType", staff.PassportcontentType);
+                cmd.Parameters.AddWithValue("@PassportData", staff.PassportData);
+                cmd.Parameters.AddWithValue("@PhotoData", staff.PhotoData);
+
+                cmd.Parameters.AddWithValue("@isIqamaUpdate", staff.isIqamaUpdate);
+                cmd.Parameters.AddWithValue("@isSarUpdate", staff.isSarUpdate);
+                cmd.Parameters.AddWithValue("@isPassUpdate", staff.isPassUpdate);
+                cmd.Parameters.AddWithValue("@isPhotoUpdate", staff.isPhotoUpdate);
+
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32(0) + " " + reader.GetString(1);
+
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return result;
+            }
+            finally { Connection.Close(); }
+
+            return result;
+
+        }
+
         public List<VehicleModel> VehicleList(int Type = 0, string condtion = "")
         {
             List<VehicleModel> vehicleModel = new List<VehicleModel>();
