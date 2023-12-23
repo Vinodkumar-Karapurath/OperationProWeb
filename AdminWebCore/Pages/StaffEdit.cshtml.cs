@@ -16,6 +16,8 @@ namespace AdminWebCore.Pages
         private IConfiguration Config { get; set; }
 
         public StaffEditModels staffModel = null;
+   
+
 
         public List<MasterModel> company = null;
         public List<MasterModel> department = null;
@@ -73,6 +75,7 @@ namespace AdminWebCore.Pages
             MemoryStream sarms = new MemoryStream();
             MemoryStream passms = new MemoryStream();
             MemoryStream photoms = new MemoryStream();
+          
 
             if (Iqamafile != null)
             {
