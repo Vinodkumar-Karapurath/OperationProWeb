@@ -634,6 +634,107 @@ namespace AdminWebCore.Class
 
         }
 
+        public VehicleEditModels GetVehicleEdit(int IDS)
+        {
+            VehicleEditModels VehiclefModel = new VehicleEditModels();
+
+            try
+            {
+
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", IDS);
+                cmd.CommandText = "SP_GETVehicle";
+                reader = cmd.ExecuteReader();
+
+
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                reader.Close();
+
+
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    VehiclefModel = dt.AsEnumerable()
+                        .Select(row => new VehicleEditModels
+
+                        {
+                            ID = row.Field<Int32>("ID"),
+                            EMPID = row.Field<int?>("AuthorizationID").ToString(),
+                            AuthorizationExpDate = row.Field<DateTime?>("AuthorizationExpDate"),
+                            plateNo = row.Field<string>("plateNo"),
+                            Vehicle = row.Field<string>("Vehicle"),
+                            VehicleExpDate = row.Field<DateTime?>("VehicleExpDate"),
+                            Model = row.Field<string>("Model"),
+                            Type = row.Field<int?>("Type").ToString(),
+                            InsuranceExpDate = row.Field<DateTime?>("InsuranceExpDate"),
+                            ContentType = row.Field<string>("ContentType"),                           
+                            PDFFile = row.Field<byte[]>("PDFFile"),
+                          
+
+                        }).FirstOrDefault();
+
+                }
+
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return VehiclefModel;
+            }
+            finally { Connection.Close(); }
+
+            return VehiclefModel;
+        }
+
+        public JsonResult GetVehiclePDF(int DOCID = 0)
+        {
+            byte[] bytes;
+            string fileName, contentType;
+
+            try
+            {
+
+
+                Connection.Open();
+
+
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@DOCID", DOCID);
+
+                cmd.CommandText = "SP_GetVehiclePDF";
+
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    sdr.Read();
+                    bytes = (byte[])sdr["Data"];
+                    contentType = sdr["ContentType"].ToString();
+                    fileName = sdr["Name"].ToString();
+                }
+
+
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return null;
+            }
+            finally { Connection.Close(); }
+
+            return new JsonResult(new { FileName = fileName, ContentType = contentType, Data = bytes });
+        }
+
         //public string DecryptString(string key, string cipherText)
         //{
         //    byte[] iv = new byte[16];
