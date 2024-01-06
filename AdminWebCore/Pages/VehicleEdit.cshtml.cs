@@ -66,7 +66,7 @@ namespace AdminWebCore.Pages
                 vehicles.PDFFile = photoms.ToArray();
             }
 
-           // string result = db.VehicleUpdate(vehicles);
+            string result = db.VehicleUpdate(vehicles);
 
             photoms.Dispose();
 

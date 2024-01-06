@@ -11,6 +11,7 @@ using System.IO;
 using AdminWebCore.Models;
 using System.Diagnostics.Metrics;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 
 namespace AdminWebCore.Class
 {
@@ -733,6 +734,54 @@ namespace AdminWebCore.Class
             finally { Connection.Close(); }
 
             return new JsonResult(new { FileName = fileName, ContentType = contentType, Data = bytes });
+        }
+
+        public string VehicleUpdate(VehicleEditModels vehicle)
+        {
+
+            string result = string.Empty;
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "SP_UpdateVehicle";
+                cmd.Parameters.AddWithValue("@ID", vehicle.ID);
+                cmd.Parameters.AddWithValue("@Vehicle", vehicle.Vehicle);
+                cmd.Parameters.AddWithValue("@VehicleExpDate", vehicle.VehicleExpDate);
+                cmd.Parameters.AddWithValue("@InsuranceExpDate", vehicle.InsuranceExpDate);
+                cmd.Parameters.AddWithValue("@AuthorizationExpDate", vehicle.AuthorizationExpDate);
+                cmd.Parameters.AddWithValue("@Model", vehicle.Model);
+                cmd.Parameters.AddWithValue("@Type", vehicle.Type);
+                cmd.Parameters.AddWithValue("@plateNo", vehicle.plateNo);
+                cmd.Parameters.AddWithValue("@AuthorizationID", vehicle.EMPID);
+                cmd.Parameters.AddWithValue("@ContentType", vehicle.ContentType);
+                cmd.Parameters.AddWithValue("@PDFFile", vehicle.PDFFile);
+                cmd.Parameters.AddWithValue("@isUpdate", vehicle.isUpdate);
+
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32(0) + " " + reader.GetString(1);
+
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return result;
+            }
+            finally { Connection.Close(); }
+
+            return result;
+
         }
 
         //public string DecryptString(string key, string cipherText)

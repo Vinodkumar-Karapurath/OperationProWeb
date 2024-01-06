@@ -131,7 +131,7 @@
 
                                 <div id="tblFiles" class="col-sm-6">
                                     @Html.AntiForgeryToken()
-                                    <input type="checkbox" id="isPassUpdate" name="isPassUpdate" value="true" onclick="document.getElementById('formFileSm').disabled =!this.checked;" />
+                                    <input type="checkbox" id="isUpdate" name="isUpdate" value="true" onclick="document.getElementById('formFileSm').disabled =!this.checked;" />
                                     <label for="formFileSm" class="form-label">Attachment File</label>
                                     <input class="form-control form-control-sm" name="PDFFile" id="formFileSm" type="file" asp-for="PDFFile" disabled>
                                     <a class="view" href="javascript:;" rel='@Model.vehicleModels.ID' doc="1">View PDF</a>
@@ -198,10 +198,9 @@
             data: { "fileId": fileId , "doc": 1},
             success: function (r) {
             //Convert Base64 string to Byte Array.
-                    alert('ok');
+                   
             var bytes = Base64ToBytes(r.data);
 
-                    alert('ok1');
             LoadPdfFromBlob(bytes);
                 }
             });
