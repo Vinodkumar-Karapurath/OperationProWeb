@@ -718,7 +718,7 @@ namespace AdminWebCore.Class
                 using (SqlDataReader sdr = cmd.ExecuteReader())
                 {
                     sdr.Read();
-                    bytes = (byte[])sdr["Data"];
+                    bytes = (byte[])sdr["Data"] ;
                     contentType = sdr["ContentType"].ToString();
                     fileName = sdr["Name"].ToString();
                 }
@@ -783,6 +783,155 @@ namespace AdminWebCore.Class
             return result;
 
         }
+
+
+        public List<PaymentListModel> PaymentList(int Slno = 0, string condtion = "")
+        {
+            List<PaymentListModel> PaymentModelobj = new List<PaymentListModel>();
+
+            try
+            {
+
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@slno", Slno);
+                cmd.Parameters.AddWithValue("@condtion", condtion);
+                cmd.CommandText = "SP_GETPayment";
+                reader = cmd.ExecuteReader();
+
+
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                reader.Close();
+
+
+
+                if (dt.Rows.Count > 0)
+                {
+
+                    PaymentModelobj = dt.AsEnumerable()
+                        .Select(row => new PaymentListModel
+
+                        {
+                            ID = row.Field<Int64>("id"),
+                            Details = row.Field<string>("Details"),
+                            Trandate = row.Field<string?>("Trandate"),
+                            SIte = row.Field<string>("SIte"),
+                            SAPNumber = row.Field<string>("SAPNumber"),
+                            AdvancePayment = row.Field<decimal?>("AdvancePayment"),
+                            credit = row.Field<decimal?>("PaymentSite_credit"),
+                            Debit = row.Field<decimal?>("Debit"),
+                            Cleared = row.Field<string>("Cleared"),
+
+                        }).ToList();
+
+                }
+
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return PaymentModelobj;
+            }
+            finally { Connection.Close(); }
+
+            return PaymentModelobj;
+
+        }
+        //save payment data to database
+        public string PaymentSave(PaymentAddModel payment)
+        {
+
+            string result = string.Empty;
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.CommandText = "SP_SavePayment";
+                cmd.Parameters.AddWithValue("@TranscationDate", payment.TranscationDate);
+                cmd.Parameters.AddWithValue("@Note", payment.Note);
+                cmd.Parameters.AddWithValue("@Site", payment.Site);
+                cmd.Parameters.AddWithValue("@Sapinput", payment.Sapinput);
+                cmd.Parameters.AddWithValue("@amount", payment.amount);
+                cmd.Parameters.AddWithValue("@PDFFile", payment.PDFFile);
+                cmd.Parameters.AddWithValue("@ContentType", payment.ContentType);
+                cmd.Parameters.AddWithValue("@opttype", payment.opttype);
+                cmd.Parameters.AddWithValue("@isUpdate", payment.isUpdate);
+                cmd.Parameters.AddWithValue("@ID", payment.ID);
+
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32(0) + " " + reader.GetString(1);
+
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return result;
+            }
+            finally { Connection.Close(); }
+
+            return result;
+
+        }
+
+        //get how many pages in the database for payment
+        public int PaymentPageCount(int slno, string condtion)
+        {
+            int result = 0;
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.CommandText = "SP_GetPaymentPageCount";
+                cmd.Parameters.AddWithValue("@Slno", slno);
+                cmd.Parameters.AddWithValue("@condtion", condtion);
+
+
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    result = reader.GetInt32(0);
+
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return result;
+            }
+            finally { Connection.Close(); }
+
+            return result;
+
+        }
+            
 
         //public string DecryptString(string key, string cipherText)
         //{

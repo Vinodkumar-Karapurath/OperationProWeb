@@ -1,0 +1,242 @@
+﻿@page
+@model AdminWebCore.Pages.PaymentModel
+@{
+    ViewData["Title"] = "Payments";
+}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-edit"></i>Transactions
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data" asp-page-handler="Save">
+
+                            <div class="form-group">
+                                <label class="col-form-label" for="date-input">TranscationDate</label>
+                                <input class="form-control" id="date-input" asp-for="@DateTime.Now" type="date" name="TranscationDate" placeholder="date">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label" for="Note">Note</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@@</span>
+                                        </div>
+                                        <input class="form-control" list="notelist" name="Note" id="Note" size="16" type="text">
+                                        <datalist id="notelist">
+                                            @foreach (var wm in Model.Note)
+                                            {
+                                                <option>@wm.MasterName</option>
+                                            }
+                                           
+                                        </datalist>
+                                    </div>
+                                    <p class="help-block">Goto master to define Note</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label" for="Site">Site</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@@</span>
+                                        </div>
+                                        <input class="form-control" list="sitelist" name="Site" id="Site" size="16" type="text">
+                                        <datalist id="sitelist">
+                                            <option>None</option>
+                                            @foreach (var wm in Model.Site)
+                                            {
+                                                <option>@wm.MasterName</option>
+                                            }
+                                        </datalist>
+                                    </div>
+                                    <p class="help-block">Goto master to define Site</p>
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label class="col-form-label" for="Sapinput">SAP Details</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">SAP</span>
+                                        </div>
+                                        <input class="form-control" id="Sapinput" name="Sapinput" size="16" type="text">
+                                      
+                                    </div>
+                                    <p class="help-block">Enter SAP Code Referance</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="formFileSm" class="form-label">File</label>
+                                <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="Pdffile">
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Trancation Type</label>
+                                <div class="col-md-9 col-form-label">
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio1" type="radio" name="opttype" value="1" checked="checked">
+                                        <label class="form-check-label" for="inline-radio1">Advance Payment</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio2" type="radio" name="opttype" value="2" >
+                                        <label class="form-check-label" for="inline-radio2">Site Advance</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio3" type="radio" name="opttype"  value="3">
+                                        <label class="form-check-label" for="inline-radio3">Site Recipts</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="appendedPrependedInput">Amount</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">SAR</span>
+                                        </div>
+                                        <input class="form-control" id="appendedPrependedInput" size="16" type="text" name="amount">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" type="submit">Save changes</button>
+                                <button class="btn btn-secondary" type="button">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Transcation List
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date registered</th>
+                                    <th>Note</th>
+                                    <th>Site</th>
+                                    <th>SAP Ref</th>
+                                    <th>Adv PAY</th>
+                                    <th>Credit</th>
+                                    <th>Debit</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var wm in Model.paymentModels)
+                                {
+                                    <tr>
+
+                                        <td><a href="">@wm.ID </a></td>
+                                        <td>@wm.Trandate</td>
+                                        <td>@wm.Details</td>
+                                        <td>@wm.SIte</td>
+                                        <td>@wm.SAPNumber</td>
+                                        <td>@wm.AdvancePayment</td>
+                                        <td>@wm.credit</td>
+                                        <td>@wm.Debit</td>
+                                        <td>
+                                            @if (@wm.Cleared == "cleared")
+                                            {
+                                                <span class="badge badge-success">@wm.Cleared</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-warning">@wm.Cleared</span>
+                                            }
+
+                                           
+                                        </td>
+                                       
+                                    </tr>
+                                    
+                                }
+                               
+                                
+                            </tbody>
+                        </table>
+                        @if (Model.pagenationcount != 0)
+                        {
+                            //create loop through pages
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Prev</a>
+                                    </li>
+                                    @for (int i = 1; i <=Model.pagenationcount; i++)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="@i">@i</a>
+                                        </li>
+                               
+                                    }
+                                     <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            
+                            
+                        }
+                        
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("[id*=tblFiles] .view").click(function () {
+
+                let linkposturl = '';
+                var RootUrl = '@Url.Content("~/")';
+
+              
+                linkposturl = RootUrl + 'StaffEdit?Handler=GetPDF';
+
+                var data = {};
+                data.fileId = 2;
+                var fileId = $(this).attr("rel");
+                var doc = $(this).attr("doc");
+                $.ajax({
+                    type: "GET",
+                    url: linkposturl,
+                    // beforeSend: function (xhr) {
+                    //     xhr.setRequestHeader("XSRF-TOKEN",
+                    //         $('input:hidden[name="__RequestVerificationToken"]').val());
+                    // },
+                    data: { "fileId": fileId, "DOCID": doc },
+                    success: function (r) {
+                        //Convert Base64 string to Byte Array.
+
+                        var bytes = Base64ToBytes(r.data);
+
+
+                        LoadPdfFromBlob(bytes);
+                    }
+                });
+            });
+        });
+    </script>
+}
