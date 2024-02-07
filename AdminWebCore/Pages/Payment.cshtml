@@ -124,7 +124,7 @@
                         <i class="fa fa-align-justify"></i> Transcation List
                     </div>
                     <div class="card-body">
-                        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                        <table id="tblFiles"  class="table table-responsive-sm table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -141,9 +141,9 @@
                             <tbody>
                                 @foreach (var wm in Model.paymentModels)
                                 {
-                                    <tr>
-
-                                        <td><a href="">@wm.ID </a></td>
+                                    <tr >
+                                        
+                                        <td><a class="view" href="javascript:;" rel='@wm.ID'>@wm.ID </a></td>
                                         <td>@wm.Trandate</td>
                                         <td>@wm.Details</td>
                                         <td>@wm.SIte</td>
@@ -212,13 +212,12 @@
                 let linkposturl = '';
                 var RootUrl = '@Url.Content("~/")';
 
-              
-                linkposturl = RootUrl + 'StaffEdit?Handler=GetPDF';
+
+                linkposturl = RootUrl + 'Payment?Handler=GetPaymentDetails';
 
                 var data = {};
                 data.fileId = 2;
                 var fileId = $(this).attr("rel");
-                var doc = $(this).attr("doc");
                 $.ajax({
                     type: "GET",
                     url: linkposturl,
@@ -226,14 +225,11 @@
                     //     xhr.setRequestHeader("XSRF-TOKEN",
                     //         $('input:hidden[name="__RequestVerificationToken"]').val());
                     // },
-                    data: { "fileId": fileId, "DOCID": doc },
+                    data: { "fileId": fileId },
                     success: function (r) {
-                        //Convert Base64 string to Byte Array.
+                        
 
-                        var bytes = Base64ToBytes(r.data);
-
-
-                        LoadPdfFromBlob(bytes);
+                       
                     }
                 });
             });

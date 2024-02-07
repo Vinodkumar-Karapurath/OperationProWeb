@@ -1,5 +1,5 @@
 # Admin Web Core Razor
-Boilerplate bootstrap admin template for `ASP.NET Core 3.1` for a Razor project.
+Boilerplate bootstrap admin template for `ASP.NET Core 7.0` for a Razor project.
 
 The project is based on Razor [pages](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-3.1&tabs=visual-studio). I have already fixed the solution to add `webapi` and document them with **Swagger**.
 
@@ -12,6 +12,10 @@ The project is based on Razor [pages](https://docs.microsoft.com/en-us/aspnet/co
     - **wwwroot**: static files 
         - **CoreUI**: original files from the free template CoreUI
 
+## About project
+
+Operation Pro is web-based tracking the company staff's basic information and vehicle details.
+Also, tracking some advance payments and expenses to the site.   
 
 ## Dependecies
 
@@ -23,6 +27,18 @@ The project is based on Razor [pages](https://docs.microsoft.com/en-us/aspnet/co
 ### Dashboard
 
 ![Dashboard](Screenshots/HomePage.png)
+
+### vehicle
+
+![vehicle](Screenshots/Screenshot 2023-12-19 123324.png)
+
+### StaffList
+
+![StaffList](Screenshots/Screenshot 2023-12-19 123403.png)
+
+### Staff
+
+![Staff](Screenshots/Screenshot 2023-12-19 123439.png)
 
 ### Swagger
 

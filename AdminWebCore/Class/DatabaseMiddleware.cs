@@ -931,7 +931,110 @@ namespace AdminWebCore.Class
             return result;
 
         }
-            
+
+        //get next list for payment from the database by pagation count
+        public List<PaymentListModel> PaymentNextList(int slno, string condtion, int page)
+        {
+            List<PaymentListModel> PaymentModelobj = new List<PaymentListModel>();
+
+            try
+            {
+                   Connection.Open();
+
+                IDataReader reader = null;
+                DataTable dt = new DataTable();
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@slno", slno);
+                cmd.Parameters.AddWithValue("@condtion", condtion);
+                cmd.Parameters.AddWithValue("@page", page);
+                cmd.CommandText = "SP_GETPaymentNextList";
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    
+                    dt.Load(reader);
+                    reader.Close();
+
+                }
+                if (reader.Read())
+                {
+                    PaymentModelobj = dt.AsEnumerable()
+                        .Select(row => new PaymentListModel
+
+                        {
+                            ID = row.Field<Int64>("id"),
+                            Details = row.Field<string>("Details"),
+                            Trandate = row.Field<string?>("Trandate"),
+                            SIte = row.Field<string>("SIte"),
+                            SAPNumber = row.Field<string>("SAPNumber"),
+                            AdvancePayment = row.Field<decimal?>("AdvancePayment"),
+                            credit = row.Field<decimal?>("PaymentSite_credit"),
+                            Debit = row.Field<decimal?>("Debit"),
+                            Cleared = row.Field<string>("Cleared"),
+
+                        }).ToList();
+
+                }
+
+                reader.Close();
+               
+
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return PaymentModelobj;
+            }
+            finally { Connection.Close(); }
+
+            return PaymentModelobj;
+        }
+
+        //PaymentDetails from the database
+        public PaymentAddModel PaymentDetails(int ID)
+        {
+            PaymentAddModel payment = new PaymentAddModel();
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.CommandText = "SP_GetPaymentDetails";
+                cmd.Parameters.AddWithValue("@ID", ID);
+
+                reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    payment.ID = reader.GetInt32(0);
+                    payment.TranscationDate = reader.GetDateTime(1).ToString("yyyy-MM-dd");
+                    payment.Note = reader.GetString(2);
+                    payment.Site = reader.GetString(3);
+                    payment.Sapinput = reader.GetString(4);
+                    payment.amount = reader.GetDecimal(5);
+                    payment.PDFFile = (byte[])reader["PDFFile"];
+                    payment.ContentType = reader.GetString(7);
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return payment;
+            }
+            finally { Connection.Close(); }
+
+            return payment;
+
+        }
 
         //public string DecryptString(string key, string cipherText)
         //{

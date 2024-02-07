@@ -65,5 +65,12 @@ namespace AdminWebCore.Pages
             pagenationcount = db.PaymentPageCount(10, "");
 
         }
+
+        // return selected payment details
+        public JsonResult OnGetPaymentDetails(int fileId)
+        {
+            DatabaseMiddleware db = new DatabaseMiddleware((Config["ConnectionStrings:DefaultConnection"]));
+            return new JsonResult(db.PaymentDetails(fileId));
+        }
     }
 }
