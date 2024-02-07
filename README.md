@@ -40,6 +40,6 @@ Also, tracking some advance payments and expenses to the site.
 
 ![Staff](Screenshots/Screenshot3.png)
 
-### Swagger
+### Masters
 
-![Swagger](Screenshots/Swagger.png)
+![Masters](Screenshots/Swagger.png)
