@@ -30,15 +30,15 @@ Also, tracking some advance payments and expenses to the site.
 
 ### vehicle
 
-![vehicle](Screenshots/Screenshot 2023-12-19 123324.png)
+![vehicle](Screenshots/Screenshot1.png)
 
 ### StaffList
 
-![StaffList](Screenshots/Screenshot 2023-12-19 123403.png)
+![StaffList](Screenshots/Screenshot2.png)
 
 ### Staff
 
-![Staff](Screenshots/Screenshot 2023-12-19 123439.png)
+![Staff](Screenshots/Screenshot3.png)
 
 ### Swagger
 
