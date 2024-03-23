@@ -14,6 +14,8 @@
         public int opttype { get; set; }
         public int isUpdate { get; set; }
 
+        public int status { get; set; }
+
 
 
 

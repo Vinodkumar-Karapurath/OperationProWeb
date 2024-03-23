@@ -870,6 +870,7 @@ namespace AdminWebCore.Class
                 cmd.Parameters.AddWithValue("@opttype", payment.opttype);
                 cmd.Parameters.AddWithValue("@isUpdate", payment.isUpdate);
                 cmd.Parameters.AddWithValue("@ID", payment.ID);
+                cmd.Parameters.AddWithValue("@status", payment.status);
 
                 reader = cmd.ExecuteReader();
 
@@ -948,17 +949,15 @@ namespace AdminWebCore.Class
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@slno", slno);
                 cmd.Parameters.AddWithValue("@condtion", condtion);
-                cmd.Parameters.AddWithValue("@page", page);
-                cmd.CommandText = "SP_GETPaymentNextList";
-                reader = cmd.ExecuteReader();
-                if (reader.Read())
-                {
-                    
-                    dt.Load(reader);
-                    reader.Close();
+                cmd.Parameters.AddWithValue("@offset", page);
+                cmd.CommandText = "SP_GETPayment";
 
-                }
-                if (reader.Read())
+                reader = cmd.ExecuteReader();
+                dt.Load(reader);
+                reader.Close();
+
+                
+                if (dt.Rows.Count > 0)
                 {
                     PaymentModelobj = dt.AsEnumerable()
                         .Select(row => new PaymentListModel
@@ -978,8 +977,6 @@ namespace AdminWebCore.Class
 
                 }
 
-                reader.Close();
-               
 
             }
             catch (System.Data.SqlClient.SqlException ex)
@@ -993,9 +990,9 @@ namespace AdminWebCore.Class
         }
 
         //PaymentDetails from the database
-        public PaymentAddModel PaymentDetails(int ID)
+        public PaymentEditModels PaymentDetails(int ID)
         {
-            PaymentAddModel payment = new PaymentAddModel();
+            PaymentEditModels payment = new PaymentEditModels();
             try
             {
 
@@ -1013,14 +1010,29 @@ namespace AdminWebCore.Class
 
                 if (reader.Read())
                 {
-                    payment.ID = reader.GetInt32(0);
-                    payment.TranscationDate = reader.GetDateTime(1).ToString("yyyy-MM-dd");
+                    payment.ID = reader.GetInt64(0);
+                    payment.TranscationDate = reader.GetDateTime(1);
                     payment.Note = reader.GetString(2);
                     payment.Site = reader.GetString(3);
                     payment.Sapinput = reader.GetString(4);
-                    payment.amount = reader.GetDecimal(5);
-                    payment.PDFFile = (byte[])reader["PDFFile"];
-                    payment.ContentType = reader.GetString(7);
+                    if (reader.GetDecimal(5) != 0)
+                    {
+                        payment.amount = reader.GetDecimal(5);
+                        payment.opttype = 1;
+                    }
+                    else if (reader.GetDecimal(6) != 0)
+                    {
+                        payment.amount = reader.GetDecimal(6);
+                        payment.opttype = 2;
+                    }
+                    else if (reader.GetDecimal(7) != 0)
+                    {
+                        payment.amount = reader.GetDecimal(7);
+                        payment.opttype = 3;
+                    }
+
+                     payment.status = reader.GetInt32(8);
+                
                 }
                 reader.Close();
             }
@@ -1035,6 +1047,10 @@ namespace AdminWebCore.Class
             return payment;
 
         }
+
+        //update payment from the database
+
+       
 
         //public string DecryptString(string key, string cipherText)
         //{

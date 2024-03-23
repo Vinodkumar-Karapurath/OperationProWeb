@@ -1,0 +1,153 @@
+﻿@page
+@model AdminWebCore.Pages.PaymentEditModel
+@{
+    ViewData["Title"] = "Payments Edit";
+}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-edit"></i>Transactions
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" method="post" enctype="multipart/form-data" asp-page-handler="Save">
+                            @Html.AntiForgeryToken()
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="ID">ID</label>
+                                    <input class="form-control" value="@Model.paymentModels.ID" type="text" placeholder="Enter Details" disabled>
+                                    <input class="form-control" id="ID" name="ID" value="@Model.paymentModels.ID" type="text" placeholder="Enter Details" hidden>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+
+                                <label class="col-form-label" for="date-input">TranscationDate</label>
+
+                                <input class="form-control" id="date-inputtr" type="date" asp-for='@Model.paymentModels.TranscationDate' name="TranscationDate">
+
+                            </div>
+
+                           
+                      
+                            <div class="form-group">
+                                <label class="col-form-label" for="Note">Note</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@@</span>
+                                        </div>
+                                        <input class="form-control" list="notelist" asp-for='@Model.paymentModels.Note' name="Note" id="Note" size="16" type="text">
+                                        <datalist id="notelist">
+                                            @foreach (var wm in Model.Note)
+                                            {
+                                                <option>@wm.MasterName</option>
+                                            }
+                                           
+                                        </datalist>
+                                    </div>
+                                    <p class="help-block">Goto master to define Note</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label" for="Site">Site</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@@</span>
+                                        </div>
+                                        <input class="form-control" list="sitelist" asp-for='@Model.paymentModels.Site' name="Site" id="Site" size="16" type="text">
+                                        <datalist id="sitelist">
+                                            <option>None</option>
+                                            @foreach (var wm in Model.Site)
+                                            {
+                                                <option>@wm.MasterName</option>
+                                            }
+                                        </datalist>
+                                    </div>
+                                    <p class="help-block">Goto master to define Site</p>
+                                </div>
+                            </div>
+
+                             <div class="form-group">
+                                <label class="col-form-label" for="Sapinput">SAP Details</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">SAP</span>
+                                        </div>
+                                        <input class="form-control" id="Sapinput" asp-for='@Model.paymentModels.Sapinput' name="Sapinput" size="16" type="text">
+                                      
+                                    </div>
+                                    <p class="help-block">Enter SAP Code Referance</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="formFileSm" class="form-label">File</label>
+                                <input class="form-control form-control-sm" id="formFileSm" type="file" asp-for="Pdffile">
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Trancation Type</label>
+                                <div class="col-md-9 col-form-label">
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio1" type="radio" name="opttype" value="1" @(Model.paymentModels.opttype == 1 ? "checked='checked'" : "")>
+                                        <label class="form-check-label" for="inline-radio1">Advance Payment</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio2" type="radio" name="opttype" value="2" @(Model.paymentModels.opttype == 2 ? "checked='checked'" : "")>
+                                        <label class="form-check-label" for="inline-radio2">Site Advance</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio3" type="radio" name="opttype" value="3" @(Model.paymentModels.opttype == 3 ? "checked='checked'" : "")>
+                                        <label class="form-check-label" for="inline-radio3">Site Recipts</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label" for="appendedPrependedInput">Amount</label>
+                                <div class="controls">
+                                    <div class="input-prepend input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">SAR</span>
+                                        </div>
+                                        <input class="form-control" id="appendedPrependedInput" size="16" type="text" asp-for='@Model.paymentModels.amount' name="amount">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Status Type</label>
+                                <div class="col-md-9 col-form-label">
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio1" type="radio" name="status" value="1" @(Model.paymentModels.status == 1 || Model.paymentModels.status == 0 ? "checked='checked'" : "")>
+                                        <label class="form-check-label" for="inline-radio1">Not Cleared</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio2" type="radio" name="status" value="2" @(Model.paymentModels.status == 2 ? "checked='checked'" : "")>
+                                        <label class="form-check-label" for="inline-radio2">Cleared</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-1">
+                                        <input class="form-check-input" id="inline-radio3" type="radio" name="status" value="3">
+                                        <label class="form-check-label" for="inline-radio3">Void</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" type="submit">Update changes</button>
+                                <button class="btn btn-secondary" type="button">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-->
+        </div>
+        
+    </div>
+</div>
+

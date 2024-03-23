@@ -67,10 +67,17 @@ namespace AdminWebCore.Pages
         }
 
         // return selected payment details
-        public JsonResult OnGetPaymentDetails(int fileId)
+        //public JsonResult OnPostGetPaymentDetails(int fileId)
+        //{
+        //    DatabaseMiddleware db = new DatabaseMiddleware((Config["ConnectionStrings:DefaultConnection"]));
+        //    return new JsonResult(db.PaymentDetails(fileId));
+        //}
+
+        public JsonResult OnPostGetNextPaymentDetails(int optionid)
         {
             DatabaseMiddleware db = new DatabaseMiddleware((Config["ConnectionStrings:DefaultConnection"]));
-            return new JsonResult(db.PaymentDetails(fileId));
+            JsonResult result = new JsonResult(db.PaymentNextList(10, "", optionid));
+            return result;
         }
     }
 }

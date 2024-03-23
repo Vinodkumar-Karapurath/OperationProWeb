@@ -13,7 +13,7 @@
                     </div>
                     <div class="card-body">
                         <form class="form-horizontal" method="post" enctype="multipart/form-data" asp-page-handler="Save">
-
+                            @Html.AntiForgeryToken()
                             <div class="form-group">
                                 <label class="col-form-label" for="date-input">TranscationDate</label>
                                 <input class="form-control" id="date-input" asp-for="@DateTime.Now" type="date" name="TranscationDate" placeholder="date">
@@ -138,12 +138,12 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbodyItems">
                                 @foreach (var wm in Model.paymentModels)
                                 {
                                     <tr >
-                                        
-                                        <td><a class="view" href="javascript:;" rel='@wm.ID'>@wm.ID </a></td>
+
+                                        <td> <a asp-page=@Url.Content("/PaymentEdit") asp-route-IDS=@wm.ID>@wm.ID </a></td>
                                         <td>@wm.Trandate</td>
                                         <td>@wm.Details</td>
                                         <td>@wm.SIte</td>
@@ -152,7 +152,7 @@
                                         <td>@wm.credit</td>
                                         <td>@wm.Debit</td>
                                         <td>
-                                            @if (@wm.Cleared == "cleared")
+                                            @if (@wm.Cleared == "Cleared")
                                             {
                                                 <span class="badge badge-success">@wm.Cleared</span>
                                             }
@@ -175,14 +175,14 @@
                         {
                             //create loop through pages
                             <nav>
-                                <ul class="pagination">
+                                <ul id="tblFiles" class="pagination">
                                     <li class="page-item">
                                         <a class="page-link" href="#">Prev</a>
                                     </li>
                                     @for (int i = 1; i <=Model.pagenationcount; i++)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" href="@i">@i</a>
+                                            <a class="page-link" href="javascript:;" reles='@i'>@i </a>
                                         </li>
                                
                                     }
@@ -206,31 +206,95 @@
 
 @section Scripts {
     <script>
+        // $(function () {
+        //     $("[id*=tblFiles] .view").click(function () {
+
+        //         let linkposturl = '';
+        //         var RootUrl = '@Url.Content("~/")';
+               
+
+        //         linkposturl = RootUrl + 'Payment?Handler=GetPaymentDetails';
+        //         alert(linkposturl);
+        //         var data = {};
+        //         data.fileId = 1;
+        //         var fileId = $(this).attr("rel");
+        //         $.ajax({
+        //             type: "POST",
+        //             url: linkposturl,
+        //                     dataType: "json",
+        //             contentType: "application/json; charset=utf-8",
+        //             beforeSend: function (xhr) {
+        //                 xhr.setRequestHeader("XSRF-TOKEN",
+        //                     $('input:hidden[name="__RequestVerificationToken"]').val());
+        //             },
+        //             data: { "fileId": fileId },
+        //             success: function (r) {
+                        
+
+                       
+        //             }
+        //         });
+        //     });
+        // });
+
         $(function () {
-            $("[id*=tblFiles] .view").click(function () {
+            $("[id*=tblFiles] .page-link").click(function () {
 
                 let linkposturl = '';
                 var RootUrl = '@Url.Content("~/")';
 
-
-                linkposturl = RootUrl + 'Payment?Handler=GetPaymentDetails';
-
+                var tboby = $("#tbodyItems");
+                linkposturl = RootUrl + 'Payment?Handler=GetNextPaymentDetails';
+                var linkediteurl = RootUrl + 'PaymentEdit';
+               // alert(linkposturl);
                 var data = {};
-                data.fileId = 2;
-                var fileId = $(this).attr("rel");
+                data.fileId = 1;
+                var fileId = ($(this).attr("reles")-1) *10;
+                 //alert(fileId);
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: linkposturl,
-                    // beforeSend: function (xhr) {
-                    //     xhr.setRequestHeader("XSRF-TOKEN",
-                    //         $('input:hidden[name="__RequestVerificationToken"]').val());
-                    // },
-                    data: { "fileId": fileId },
+                    dataType: "json",
+                   // contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: { "optionid": fileId },
                     success: function (r) {
-                        
 
+                        tboby.empty();
+
+                         //alert(JSON.stringify(r));
+
+                        var event_data = '';
+                        $.each(r, function (index, value) {
+                            /*console.log(value);*/
+                            event_data += '<tr>';
+                            event_data += '<td> <a href=' + linkediteurl + '?IDS=' + value.id + ' >' + value.id + ' </a></td > ';
+                            event_data += '<td>' + value.trandate + '</td>';
+                            event_data += '<td>' + value.details + '</td>';
+                            event_data += '<td>' + value.sIte + '</td>';
+                            event_data += '<td>' + value.sapNumber + '</td>';
+                            event_data += '<td>' + value.advancePayment + '</td>';
+                            event_data += '<td>' + value.credit + '</td>';
+                            event_data += '<td>' + value.debit + '</td>';
+                            if (value.cleared == "Cleared") {
+                                event_data += '<td><span class="badge badge-success"> ' + value.cleared + ' </span></td>';
+                                    }
+                                    else {
+                                event_data += '<td><span class="badge badge-warning"> ' + value.cleared + ' </span></td>';
+                                    }
+                            event_data += '<tr>';
+                        });
+                        tboby.append(event_data);
                        
+                        
+                     
                     }
+                       
+
+                    
                 });
             });
         });
