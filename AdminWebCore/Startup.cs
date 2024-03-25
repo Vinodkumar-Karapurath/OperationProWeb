@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 
 
@@ -28,6 +31,33 @@ namespace AdminWebCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(cookieOptions => {
+                cookieOptions.LoginPath = "/login";
+            });
+
+            services.AddMvc().AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizePage("/index");
+                options.Conventions.AuthorizePage("/MasterAdd");
+                options.Conventions.AuthorizePage("/MasterEdit");
+                options.Conventions.AuthorizePage("/Masters");
+                options.Conventions.AuthorizePage("/Payment");
+                options.Conventions.AuthorizePage("/PaymentEdit");
+                options.Conventions.AuthorizePage("/StaffAdd");
+                options.Conventions.AuthorizePage("/StaffEdit");
+                options.Conventions.AuthorizePage("/StaffList");
+                options.Conventions.AuthorizePage("/VehicleAdd");
+                options.Conventions.AuthorizePage("/VehicleEdit");
+                options.Conventions.AuthorizePage("/VehicleList");
+            });
+
+           
+
             services.AddRazorPages();
             services.AddControllers();
 
@@ -44,11 +74,14 @@ namespace AdminWebCore
 
                 // Document description
                 config.Description = "AdminWebCore documentation";
+                
             });
 
             services.AddTransient<DatabaseMiddleware>(_ => new DatabaseMiddleware(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            
+
 
             //services.AddAuthentication("Bearer")
             //        .AddJwtBearer("Bearer", options => {
@@ -99,8 +132,10 @@ namespace AdminWebCore
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
-            
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -108,6 +143,7 @@ namespace AdminWebCore
                 endpoints.MapControllers();
             });
 
+           
             app.UseOpenApi();
             app.UseSwaggerUi3();
         }

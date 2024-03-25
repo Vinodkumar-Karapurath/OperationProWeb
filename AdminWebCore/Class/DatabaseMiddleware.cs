@@ -86,6 +86,40 @@ namespace AdminWebCore.Class
 
         }
 
+        //create function for login passusername and return password
+        public string Login(string username)
+        {
+            string password = string.Empty;
+            try
+            {
+
+                Connection.Open();
+
+                IDataReader reader = null;
+
+                using var cmd = Connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "SP_GetUsers";
+                cmd.Parameters.AddWithValue("@UserName", username);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    password = reader.GetString(1);
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                LogMiddleware.LogData(_Filepath, ex.Message);
+                return password;
+            }
+            finally { Connection.Close(); }
+
+            return password;
+
+        }
+
+
         //CustomerList Function
         public List<MasterModel> MasterList(string Type)
         {

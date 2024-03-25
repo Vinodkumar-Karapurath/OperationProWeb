@@ -1,5 +1,6 @@
 ﻿using AdminWebCore.Class;
 using AdminWebCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace AdminWebCore.Pages
 {
+   
     public class IndexModel : PageModel
     {
             private IConfiguration Config { get; set; }
